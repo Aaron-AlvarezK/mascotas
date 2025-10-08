@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listado de mascotas</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+  <header class="hero">
+<nav class="menu">
+    <ul>
+      <li><a href="{% url 'home' %}">Inicio</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Fotos</a></li>
+      <li><a href="#">Eventos</a></li>
+      <li><a href="#">Quienes Somos</a></li>
+
+      {% if user.is_authenticated %}
+      {% if user.is_authenticated and user.is_superuser %}
+        <li><a href="{% url 'lista_clientes' %}">Clientes</a></li>
+        <li><a href="{% url 'crear_cliente' %}">Nuevo Cliente</a></li>
+        <li><a href="{% url 'solicitudes' %}">Ver Solicitudes</a></li>
+        <li><a href="{% url 'crear_solicitud' %}">Nueva Solicitud</a></li>
+      {% endif %}
+        <li><a href="{% url 'user_logout' %}">Logout</a></li>
+      {% else %}
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'register' %}">Registrarse</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+    <div class="hero-texto">
+      <h1>Mascotas Felices en Mis Perris</h1>
+      <a href="" class="boton">Leer más</a>
+    </div>
+  </header>
+
+  <section class="bienvenida">
+    <h2>Galería de imágenes</h2>
+    <p>Nuestros Perritos</p>
+  </section>
+
+  <main class="container mt-5">
+    <div class="alert alert-success display-6">Listado de mascotas</div>
+
+    {% if mascotas %}
+    <div class="mascotas-container">
+      {% for mas in mascotas %}
+        <div class="mascota">
+          <img src="{% static 'images/' %}{{ mas.foto }}" alt="{{ mas.nombre }}">
+          <h4>{{ mas.nombre }}</h4>
+          <p>Raza:{{ mas.raza }}</p>
+          <p>Descripción: {{ mas.descripcion }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info">No hay mascotas registradas</div>
+  {% endif %}
+  
+
+  <footer class="footer">
+    <p>Mis Perris 2025</p>
+  </footer>
+
+</body>
+</html>

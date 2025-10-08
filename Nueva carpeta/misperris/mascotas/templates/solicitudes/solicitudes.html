@@ -1,0 +1,8 @@
+<h2>solicitudes</h2>
+<ul>
+{% for s in solicitudes %}
+    <li>{{ s.run_cliente }} - {{ s.nombre_mascota }} - {{ s.fecha }} - {{ s.detalle|truncatechars:80 }}</li>
+{% empty %}
+    <li>No hay solicitudes.</li>
+{% endfor %}
+</ul>
